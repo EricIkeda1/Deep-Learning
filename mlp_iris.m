@@ -102,9 +102,19 @@ end
     acuracia = acertos/length(classeReal)*100;
 
     fprintf('\n');
-    fprintf('=======================================\n');
-    fprintf('ACURÁCIA = %.2f %%\n',acuracia);
-    fprintf('=======================================\n');
+    fprintf('=========== RESULTADOS ===========\n');
+    fprintf('Número de Amostras      : %d\n', size(X,2));
+    fprintf('Número de Entradas      : %d\n', size(X,1));
+    fprintf('Número de Classes       : %d\n', size(T,1));
+    fprintf('Número de Acertos       : %d\n', acertos);
+    fprintf('Número de Erros         : %d\n', length(classeReal)-acertos);
+    fprintf('Acurácia                : %.2f %%\n', acuracia);
+    fprintf('Erro Médio              : %.6f\n', perform(net,T,Y));
+    fprintf('Função de Treinamento   : %s\n', net.trainFcn);
+    fprintf('Função de Desempenho    : %s\n', net.performFcn);
+    fprintf('==================================\n');
+
+    
 
     %% ============================================================
     % Matriz de Confusão
@@ -163,50 +173,49 @@ end
     % Mostrar pesos
     % =============================================================
 
-    disp('Pesos da primeira camada');
-
+    disp('==================================');
+    disp('PESOS DA PRIMEIRA CAMADA');
     disp(net.IW{1});
 
-    disp('Bias da primeira camada');
-
+    disp('BIAS DA PRIMEIRA CAMADA');
     disp(net.b{1});
 
-    disp('Pesos da camada de saída');
-
+    disp('PESOS DA CAMADA DE SAÍDA');
     disp(net.LW{2});
 
-    disp('Bias da saída');
-
+    disp('BIAS DA CAMADA DE SAÍDA');
     disp(net.b{2});
+    disp('==================================');
 
     %% ============================================================
     % Fazer previsão de uma nova flor
     % =============================================================
 
-    novaFlor = [5.1
-                3.5
-                1.4
-                0.2];
-
-    resultado = net(novaFlor);
-
-    [~,classe] = max(resultado);
-
     fprintf('\n');
+    fprintf('Primeiras 10 previsões:\n\n');
 
-    switch classe
+    for i = 1:10
 
-        case 1
-            disp('Nova flor: SETOSA');
+        fprintf('Amostra %3d -> ',i);
 
-        case 2
-            disp('Nova flor: VERSICOLOR');
+        switch classeReal(i)
+            case 1
+                fprintf('Real: Setosa       ');
+            case 2
+                fprintf('Real: Versicolor   ');
+            case 3
+                fprintf('Real: Virginica    ');
+        end
 
-        case 3
-            disp('Nova flor: VIRGINICA');
+        switch classePrevista(i)
+            case 1
+                fprintf(' Prevista: Setosa');
+            case 2
+                fprintf(' Prevista: Versicolor');
+            case 3
+                fprintf(' Prevista: Virginica');
+        end
+
+        fprintf('\n');
 
     end
-
-    disp('Probabilidades:')
-
-    disp(resultado)
