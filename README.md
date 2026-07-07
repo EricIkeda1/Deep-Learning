@@ -22,6 +22,7 @@ O objetivo é apresentar conceitos fundamentais de Deep Learning, incluindo trei
 - MATLAB
 - Deep Learning Toolbox
 - Machine Learning
+- Inteligência Artificial
 
 ---
 
